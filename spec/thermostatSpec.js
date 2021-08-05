@@ -61,4 +61,38 @@ describe ('Thermostat', () => {
       expect(thermostat.getCurrentTemp()).toEqual(32);
     });
   });
- });
+
+  it('can be reset to the default temp', () => {
+    thermostat.up();
+    thermostat.up();
+    thermostat.resetTemp();
+    expect(thermostat.getCurrentTemp()).toEqual(20);
+  });
+  
+  describe('energy usage levels', () => {
+    describe('when the temp is below 18', () => {
+      it('is considered low-usage', () => {
+        for(let i =1; i < 4; i++) {
+          thermostat.down();
+        }
+        expect(thermostat.energyUsage()).toEqual('low-usage');
+      });
+    });
+
+    describe('when the temp is between 18 and 25', () => {
+      it('is considered medium-usage', () => {
+        expect(thermostat.energyUsage()).toEqual('medium-usage');
+      });
+    });
+
+    describe('when the temp is higher than 25', () => {
+      it('is considered high-usage', () => {
+        thermostat.powerSavingMode = false;
+        for(let i = 1; i < 7; i++) {
+          thermostat.up();
+        }
+        expect(thermostat.energyUsage()).toEqual('high-usage');
+      });
+    });
+  });
+});
