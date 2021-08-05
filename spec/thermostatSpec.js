@@ -1,59 +1,39 @@
+'use strict';
 
-// describe("Player", function() {
-//   var player;
-//   var song;
+describe ('Thermostat', () => {
+  let thermostat;
 
-//   beforeEach(function() {
-//     player = new Player();
-//     song = new Song();
-//   });
+  beforeEach(() => {
+    thermostat = new Thermostat;
+  });
 
-//   it("should be able to play a Song", function() {
-//     player.play(song);
-//     expect(player.currentlyPlayingSong).toEqual(song);
+  it('starts at 20 degrees', () => {
+    expect(thermostat.getCurrentTemp()).toEqual(20);
+  });
 
-//     //demonstrates use of custom matcher
-//     expect(player).toBePlaying(song);
-//   });
+  it('increases the temp with up()', () => {
+    thermostat.up();
+    expect(thermostat.getCurrentTemp()).toEqual(21);
+  });
 
-//   describe("when song has been paused", function() {
-//     beforeEach(function() {
-//       player.play(song);
-//       player.pause();
-//     });
+  it('decreases the temp with down()', () => {
+    thermostat.down();
+    expect(thermostat.getCurrentTemp()).toEqual(19);
+  });
 
-//     it("should indicate that the song is currently paused", function() {
-//       expect(player.isPlaying).toBeFalsy();
+  it('has a minimum of 10 degrees', () => {
+    for(let i = 1; i < 11; i++) {
+      thermostat.down();
+    }
+    expect(thermostat.getCurrentTemp()).toEqual(10);
+  });
 
-//       // demonstrates use of 'not' with a custom matcher
-//       expect(player).not.toBePlaying(song);
-//     });
+  it('has power saving mode on by default', () => {
+    expect(thermostat.isPowerSavingModeOn()).toBe(true);
+  });
 
-//     it("should be possible to resume", function() {
-//       player.resume();
-//       expect(player.isPlaying).toBeTruthy();
-//       expect(player.currentlyPlayingSong).toEqual(song);
-//     });
-//   });
-
-//   // demonstrates use of spies to intercept and test method calls
-//   it("tells the current song if the user has made it a favorite", function() {
-//     spyOn(song, 'persistFavoriteStatus');
-
-//     player.play(song);
-//     player.makeFavorite();
-
-//     expect(song.persistFavoriteStatus).toHaveBeenCalledWith(true);
-//   });
-
-//   //demonstrates use of expected exceptions
-//   describe("#resume", function() {
-//     it("should throw an exception if song is already playing", function() {
-//       player.play(song);
-
-//       expect(function() {
-//         player.resume();
-//       }).toThrowError("song is already playing");
-//     });
-//   });
-// });
+  it('cand switch power saving mode off', () => {
+    thermostat.switchPowerSavingModeOff();
+    expect(thermostat.isPowerSavingModeOn()).toBe(false);
+  });
+ });
