@@ -36,3 +36,8 @@ document.querySelector("#powersaving-off").addEventListener('click', () => {
   document.querySelector("#power-saving-status").innerText = 'off';
   updateTemp();
 });
+
+const updateTemperature = () => {
+  document.querySelector('#temperature').innerText = thermostat.temp;
+  document.querySelector('#temperature').className = thermostat.energyUsage();
+}
